@@ -4,6 +4,7 @@
 ## 后续
 - css 单独分离及less,scss接入
 - 修改config，添加页面级配置
+- 添加loader
 
 ## 目录结构
 
