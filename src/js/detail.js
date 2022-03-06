@@ -1,2 +1,2 @@
-import '../style/detail.css'
+import '../style/detail.less'
 console.log('detail')

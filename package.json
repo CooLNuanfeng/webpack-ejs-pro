@@ -4,6 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
+    "dev": "webpack -w --config ./config/webpack.config.js",
     "build": "webpack --config ./config/webpack.config.js"
   },
   "author": "",
@@ -11,7 +12,10 @@
   "devDependencies": {
     "css-loader": "^6.5.1",
     "ejs-loader": "^0.5.0",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
