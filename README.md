@@ -2,9 +2,7 @@
 通过webpack构建传统页面基本配置
 
 ## 后续
-- css 单独分离及less,scss接入
 - 修改config，添加页面级配置
-- 添加loader
 
 ## 目录结构
 
@@ -22,11 +20,17 @@
     ├── ejs
     │   ├── detail.ejs
     │   └── index.ejs
+    ├── images
+    │   ├── 3Dclass.png
+    │   ├── edit.png
+    │   └── love.png
     ├── js
     │   ├── common.js
     │   ├── detail.js
     │   └── index.js
     └── style
-        ├── detail.css
-        └── index.css
+        ├── common.css
+        ├── detail.less
+        ├── header.less
+        └── index.less
 ```
