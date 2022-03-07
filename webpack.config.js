@@ -1,17 +1,32 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const pagesConfig = require('./config/pages')
 const path = require('path')
 
+const entrys = {}
+const plugins = []
+
+pagesConfig.forEach(item => {
+  entrys[item.page] = path.resolve(__dirname, `src/js/${item.page}.js`)
+  plugins.push(
+    new HtmlWebpackPlugin({
+      filename: `${item.page}.html`,
+      chunks: ['common',item.page,...item.chunks],
+      template: path.resolve(__dirname, `src/ejs/${item.page}.ejs`),
+      meta: { ...item.meta }
+    }),
+  )
+})
+
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: {
-    common: path.resolve(__dirname, '../src/js/common.js'),
-    index: path.resolve(__dirname, '../src/js/index.js'),
-    detail: path.resolve(__dirname, '../src/js/detail.js')
+    common: path.resolve(__dirname, 'src/js/common.js'),
+    ...entrys,
   },
   output: {
-    filename: './js/[name].js'
+    filename: './js/[name].js',
+    assetModuleFilename: 'imgs/[name][ext]'
   },
   module: {
     rules: [
@@ -21,9 +36,9 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../imgs/',
-            }
+            // options: {
+            //   publicPath: '../imgs/',
+            // }
           },
           {
             loader:'css-loader',
@@ -39,16 +54,17 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'imgs/[name].[ext]',
-              publicPath: './', // 修改公共路徑
-              esModule: false
-            }
-          },
-        ]
+        type: 'asset/resource',
+        // use: [
+        //   {
+        //     loader: 'file-loader',
+        //     options: {
+        //       name: 'imgs/[name].[ext]',
+        //       publicPath: './', // 修改公共路徑
+        //       esModule: false
+        //     },
+        //   },
+        // ]
       },
       {
         test: /\.ejs$/,
@@ -66,9 +82,9 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../imgs/',
-            }
+            // options: {
+            //   publicPath: '../imgs/',
+            // }
           },
           {
             loader:'css-loader',
@@ -84,15 +100,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "./styles/[name].css",
     }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      chunks: ['common','index'],
-      template: path.resolve(__dirname, '../src/ejs/index.ejs'),
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'detail.html',
-      chunks: ['common','detail'],
-      template: path.resolve(__dirname, '../src/ejs/detail.ejs'),
-    }),
+    ...plugins,
   ],
 }
